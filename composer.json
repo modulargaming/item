@@ -1,0 +1,15 @@
+{
+	"name": "modulargaming/item",
+	"type": "modulargaming-module",
+	"license": "BSD-3-Clause",
+	"description": "Item module for Modular Gaming",
+	"keywords": [
+		"modulargaming"
+	],
+	"homepage": "https://github.com/modulargaming/item",
+
+	"require": {
+		"php": ">=5.3.2",
+		"modulargaming/installer": "*"
+	}
+}
