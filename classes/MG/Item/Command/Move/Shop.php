@@ -25,6 +25,10 @@ class MG_Item_Command_Move_Shop extends Item_Command_Move {
 
 	public function perform($item, $amount, $data=null)
 	{
+		if ($item->item->transferable == FALSE)
+		{
+			return FALSE;
+		}
 		$name = $item->item->name($amount);
 
 		if(!$item->move('shop', $amount))

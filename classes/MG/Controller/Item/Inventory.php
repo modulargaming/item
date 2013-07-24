@@ -105,7 +105,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 				->where('item_id', '=', $item->item_id)
 				->find();
 
-			if ($user_shop->loaded() && ($user_shop->inventory_space() == TRUE || ($user_shop->inventory_space() == FALSE && $shop_item->loaded())))
+			if ($item->item->transferable == FALSE AND $user_shop->loaded() AND ($user_shop->inventory_space() == TRUE || ($user_shop->inventory_space() == FALSE AND $shop_item->loaded())))
 			{
 				$actions['move_shop'] = array(
 					'item'  => 'Move to your shop',
