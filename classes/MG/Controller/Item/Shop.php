@@ -38,12 +38,6 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		$initial_points = $points['initial'];
 		$shop = $this->_check_shop();
 
-		//if the user already has a shop redirect to index
-		if ($shop->loaded() == TRUE)
-		{
-			$this->redirect(Route::get('item.user_shop.index')->uri());
-		}
-
 		$config = Kohana::$config->load('items.user_shop.size');
 
 		//if the shops are upgradeable
