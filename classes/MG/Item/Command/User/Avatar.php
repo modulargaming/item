@@ -35,7 +35,7 @@ class MG_Item_Command_User_Avatar extends Item_Command {
 		return $avatar->loaded();
 	}
 
-	public function perform($item, $param, $data=null)
+	public function perform($item, $param, $data = NULL)
 	{
 		$avatar = ORM::factory('Avatar')
 			->where('name', '=', $param)
@@ -43,9 +43,10 @@ class MG_Item_Command_User_Avatar extends Item_Command {
 
 		$user = Auth::instance()->get_user();
 
-		if($user->has('avatars', $avatar))
+		if ($user->has('avatars', $avatar))
 			return '';
-		else {
+		else
+		{
 			$user->add('avatars', $avatar);
 			$user->save();
 			return '<img src="'.URL::site($avatar->img()).'" /> You have recieved the "'.$avatar->title.'" avatar!';

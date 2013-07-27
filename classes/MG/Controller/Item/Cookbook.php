@@ -10,6 +10,7 @@
  * @copyright  (c) Modular gaming
  */
 class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
+
 	protected $protected = TRUE;
 
 	public function action_index()
@@ -43,19 +44,19 @@ class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
 
 		$errors = array();
 
-		if (!$item->loaded())
+		if ( ! $item->loaded())
 		{
 			$errors[] = 'Recipe could not be found';
 		}
-		else if ($item->user_id != $this->user->id)
+		elseif ($item->user_id != $this->user->id)
 		{
 			$errors[] = 'You can\'t access another player\'s recipe';
 		}
-		else if ($item->location != 'cookbook')
+		elseif ($item->location != 'cookbook')
 		{
 			$errors[] = 'The recipe you want to view is not located in your cookbook.';
 		}
-		else if ($item->item->type->default_command != 'General_Cook')
+		elseif ($item->item->type->default_command != 'General_Cook')
 		{
 			$errors[] = 'The item you want to use as a recipe just isn\'t cut out for it.';
 		}
@@ -136,23 +137,23 @@ class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
 
 		$errors = array();
 
-		if (!$item->loaded())
+		if ( ! $item->loaded())
 		{
 			$errors[] = 'You can\'t use a recipe that does not exist';
 		}
-		else if ($item->user_id != $this->user->id)
+		elseif ($item->user_id != $this->user->id)
 		{
 			$errors[] = 'You can\'t access another player\'s recipe';
 		}
-		else if ($item->location != 'cookbook')
+		elseif ($item->location != 'cookbook')
 		{
 			$errors[] = 'The recipe you want to view is not located in your cookbook';
 		}
-		else if ($item->item->type->default_command != 'General_Cook')
+		elseif ($item->item->type->default_command != 'General_Cook')
 		{
 			$errors[] = 'You can\'t use this item as a recipe.';
 		}
-		else if ($action == NULL)
+		elseif ($action == NULL)
 		{
 			$errors[] = 'No action to perform has been specified';
 		}
@@ -172,7 +173,7 @@ class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
 				$user_item = Item::factory($material->item)
 					->user_has('inventory');
 
-				if ($user_item != FALSE && $user_item->amount >= $material->amount)
+				if ($user_item != FALSE AND $user_item->amount >= $material->amount)
 				{
 					$user_item->amount('-', $material->amount);
 					$materials++;
@@ -184,7 +185,7 @@ class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
 				Item::factory($recipe->item)->to_user($this->user);
 				$item->amount('-', 1);
 				$db->commit();
-				$result = 'You\'ve successfully made ' . $recipe->item->name;
+				$result = 'You\'ve successfully made '.$recipe->item->name;
 			}
 			else
 			{
@@ -208,7 +209,7 @@ class MG_Controller_Item_Cookbook extends Abstract_Controller_Frontend {
 
 			return $this->response->body(json_encode($return));
 		}
-		else if (count($errors) > 0)
+		elseif (count($errors) > 0)
 		{
 			Hint::error($errors[0]);
 			$this->redirect(Route::get('item.cookbook')->uri());

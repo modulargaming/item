@@ -30,22 +30,26 @@ class MG_Item_Command_Pet_Play extends Item_Command_Pet {
 		return (Valid::digit($param) AND $param > 0);
 	}
 
-	public function perform($item, $param, $pet=null)
+	public function perform($item, $param, $pet = NULL)
 	{
-		if($pet->happiness == 100)
+		if ($pet->happiness == 100)
 			return FALSE;
 		else
 		{
 			$level = $pet->happiness + $param;
 
-			if($level > 100)
+			if ($level > 100)
+			{
 				$pet->happiness = 100;
+			}
 			else
+			{
 				$pet->happiness = $level;
+			}
 
 			$pet->save();
 
-			return $pet->name.' played with '. $item->item->name;
+			return $pet->name.' played with '.$item->item->name;
 		}
 	}
 }

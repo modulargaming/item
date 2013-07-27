@@ -27,7 +27,7 @@ class MG_View_Item_Trade_Bid extends Abstract_View_Inventory {
 	 */
 	public function lot()
 	{
-		if ($this->lot != FALSE && $this->lot->loaded())
+		if ($this->lot != FALSE AND $this->lot->loaded())
 		{
 			$items = array();
 

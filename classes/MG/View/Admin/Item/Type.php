@@ -44,7 +44,7 @@ class MG_View_Admin_Item_Type extends Abstract_View_Admin {
 		{
 			$name = str_replace(Kohana::include_paths(), '', $cmd);
 			$name = str_replace(array('\\', '/'), '_', $name);
-			$value = 'Item_Command_' . $name;
+			$value = 'Item_Command_'.$name;
 			$command = new $value;
 
 			if ($command->is_default() == FALSE)

@@ -15,7 +15,7 @@ class MG_Item_Command_Move extends Item_Command {
 		return NULL;
 	}
 
-	public function perform($item, $amount, $data=null)
+	public function perform($item, $amount, $data = NULL)
 	{
 		return NULL;
 	}

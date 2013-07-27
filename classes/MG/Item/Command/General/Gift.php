@@ -23,7 +23,7 @@ class MG_Item_Command_General_Gift extends Item_Command {
 		return NULL;
 	}
 
-	public function perform($item, $amount, $data=null)
+	public function perform($item, $amount, $data = NULL)
 	{
 		return NULL;
 	}

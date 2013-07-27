@@ -40,7 +40,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 		$config = Kohana::$config->load('items.user_shop.size');
 
-		//if the shops are upgradeable
+		// if the shops are upgradeable
 		if ($config['active'] == TRUE)
 		{
 			if ($this->user->get_property('points', $initial_points) >= $config['unit_cost'])
@@ -95,7 +95,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 		$shop = $this->_check_shop();
 
-		//if the user already has a shop redirect to index
+		// if the user already has a shop redirect to index
 		if ($shop->loaded() == TRUE)
 		{
 			$this->redirect(Route::get('item.user_shop.index')->uri());
@@ -107,7 +107,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		{
 			try
 			{
-				//create the shop
+				// create the shop
 				$shop = ORM::factory('User_Shop')
 					->values($this->request->post(), array('title', 'description'));
 
@@ -115,7 +115,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 				$shop->size = 1;
 				$shop->save();
 
-				if ($config['creation_cost'] != FALSE || $config['creation_cost'] > 0)
+				if ($config['creation_cost'] != FALSE OR $config['creation_cost'] > 0)
 				{
 					if ($this->user->get_property('points', $initial_points) < $config['creation_cost'])
 					{
@@ -149,7 +149,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		$this->view = new View_Item_Shop_Create;
 		$this->view->creation = FALSE;
 
-		if ($config['creation_cost'] != FALSE || $config['creation_cost'] > 0)
+		if ($config['creation_cost'] != FALSE OR $config['creation_cost'] > 0)
 		{
 			$this->view->creation = array('cost' => $config['creation_cost'], 'affordable' => ($this->user->get_property('points', $initial_points) < $config['creation_cost']));
 		}
@@ -199,25 +199,25 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 					$errors = TRUE;
 				}
 
-				else if ($item->user_id != $this->user->id)
+				elseif ($item->user_id != $this->user->id)
 				{
 					Hint::error('you\'re trying to change an item you don\'t own');
 					$errors = TRUE;
 				}
 
-				else if ($item->location != 'shop')
+				elseif ($item->location != 'shop')
 				{
 					Hint::error('You\'re trying to change an item that\'s not located in your shop');
 					$errors = TRUE;
 				}
-				else if (isset($param['remove']) AND $param['remove'] == TRUE)
+				elseif (isset($param['remove']) AND $param['remove'] == TRUE)
 				{
-					//move the item to the inventory
+					// move the item to the inventory
 					$item->move('inventory', '*');
 				}
-				else if (Valid::digit($param['price']) AND $param['price'] > -1)
+				elseif (Valid::digit($param['price']) AND $param['price'] > -1)
 				{
-					//update the item's price
+					// update the item's price
 					$item->parameter = $param['price'];
 					$item->save();
 				}
@@ -227,7 +227,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 			{
 				Hint::error('Some items don\'t seem to exist anymore.');
 			}
-			else if ($errors != TRUE)
+			elseif ($errors != TRUE)
 			{
 				Hint::success('You\'ve successfully updated your shop\'s stock.');
 			}
@@ -249,7 +249,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		$this->view = new View_Item_Shop_Logs;
 
 		$logs = ORM::factory('Log')
-			->where('alias', '=', 'user_shop.' . $shop->id)
+			->where('alias', '=', 'user_shop.'.$shop->id)
 			->where('time', '>', strtotime('-30 days'))
 			->limit(Kohana::$config->load('items.user_shop.log_limit'))
 			->find_all();
@@ -303,8 +303,8 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 	{
 		$shop = ORM::factory('User_Shop', $this->request->param('id'));
 
-		//if no shop's found redirect to previous page
-		if (!$shop->loaded())
+		// if no shop's found redirect to previous page
+		if ( ! $shop->loaded())
 		{
 			$this->redirect($this->request->referrer());
 		}
@@ -318,15 +318,15 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 			$points = Kohana::$config->load('items.points');
 			$initial_points = $points['initial'];
 
-			if (!$item->loaded() OR $item->location != 'shop')
+			if ( ! $item->loaded() OR $item->location != 'shop')
 			{
 				Hint::error('This item is not in stock');
 			}
-			else if ($this->user->id == $item->user->id)
+			elseif ($this->user->id == $item->user->id)
 			{
 				Hint::error('You cannot buy items from your own shop.');
 			}
-			else if ($this->user->get_property('points', $initial_points) < $item->parameter)
+			elseif ($this->user->get_property('points', $initial_points) < $item->parameter)
 			{
 				Hint::error(__('You don\'t have enough :currency to buy a ":item_name"', array(':item_name' => $item->item->name)));
 			}
@@ -335,8 +335,8 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 				$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $item->parameter);
 				$this->user->save();
 
-				//log this action
-				$log = Journal::log('user_shop.' . $shop->id, 'item', ':username bought 1 :item_name for :price', array(
+				// log this action
+				$log = Journal::log('user_shop.'.$shop->id, 'item', ':username bought 1 :item_name for :price', array(
 					'item_name' => $item->item->name,
 					'username' => $this->user->username,
 					'price' => $item->parameter
@@ -378,7 +378,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 	protected function _view_shop()
 	{
-		if ($this->_shop != NULL && $this->_shop->loaded())
+		if ($this->_shop != NULL AND $this->_shop->loaded())
 		{
 			return Route::url('item.user_shop.view', array('id' => $this->_shop->id));
 		}

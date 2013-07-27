@@ -13,7 +13,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_index()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Index'))
+		if ( ! $this->user->can('Admin_Item_Shops_Index'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops index');
 		}
@@ -25,7 +25,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_paginate()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Paginate'))
+		if ( ! $this->user->can('Admin_Item_Shops_Paginate'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops paginate');
 		}
@@ -55,13 +55,13 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 		}
 		else
 		{
-			throw new HTTP_Exception_500();
+			throw HTTP_Exception::factory(500, 'Internal server error');
 		}
 	}
 
 	public function action_retrieve()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Retrieve'))
+		if ( ! $this->user->can('Admin_Item_Shops_Retrieve'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops retrieve');
 		}
@@ -88,7 +88,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_save()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Save'))
+		if ( ! $this->user->can('Admin_Item_Shops_Save'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops save');
 		}
@@ -108,9 +108,9 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 		try
 		{
 
-			//$base_dir = DOCROOT . 'assets' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'items'
+			// $base_dir = DOCROOT . 'assets' . DIRECTORY_SEPARATOR . 'img' . DIRECTORY_SEPARATOR . 'items'
 			// . DIRECTORY_SEPARATOR . 'shops' . DIRECTORY_SEPARATOR . 'npc' . DIRECTORY_SEPARATOR;
-			//$values['npc_img'] = $base_dir . $values['npc_img'];
+			// $values['npc_img'] = $base_dir . $values['npc_img'];
 			
 			$item = ORM::factory('Shop', $values['id']);
 			if ($item->loaded())
@@ -136,14 +136,14 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 				{
 					$img = $image['name'];
 				}
-				if (!Upload::valid($image))
+				if ( ! Upload::valid($image))
 				{
-					//error not valid upload
+					// error not valid upload
 					$file = array('status' => 'error', 'msg' => 'You did not provide a valid file to upload.');
 				}
-				else if (!Upload::image($image, $cfg['width'], $cfg['height'], TRUE))
+				elseif ( ! Upload::image($image, $cfg['width'], $cfg['height'], TRUE))
 				{
-					//not the right image dimensions
+					// not the right image dimensions
 					$file = array('status' => 'error', 'msg' => 'You need to provide a valid image (size: :width x :height.', array(
 						':width' => $cfg['width'], ':height' => $cfg['height']
 					));
@@ -151,26 +151,26 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 				else
 				{
 					$msg = '';
-					if ($id != NULL && $img != null && file_exists(DOCROOT . 'media/image/npc/shop/' . $img))
+					if ($id != NULL AND $img != NULL AND file_exists(DOCROOT.'media/image/npc/shop/'.$img))
 					{
-						$grave_dir = DOCROOT . 'media/graveyard/npc/shop/';
-						if (!is_dir($grave_dir))
+						$grave_dir = DOCROOT.'media/graveyard/npc/shop/';
+						if ( ! is_dir($grave_dir))
 						{
-							mkdir($grave_dir, 0, true);
+							mkdir($grave_dir, 0, TRUE);
 						}
-						//move the previously stored item to the graveyard
-						$new_name = Text::random('alnum', 4) . $img;
-						copy(DOCROOT . 'media/image/npc/shop/' . $img, $grave_dir . $new_name);
-						unlink(DOCROOT . 'media/image/npc/shop/' . $img);
-						$msg = 'The old image has been moved to the graveyard and renamed to ' . $new_name;
+						// move the previously stored item to the graveyard
+						$new_name = Text::random('alnum', 4).$img;
+						copy(DOCROOT.'media/image/npc/shop/'.$img, $grave_dir.$new_name);
+						unlink(DOCROOT.'media/image/npc/shop/'.$img);
+						$msg = 'The old image has been moved to the graveyard and renamed to '.$new_name;
 					}
 
-					if (!is_dir(DOCROOT . 'media/image/npc/shop/'))
+					if ( ! is_dir(DOCROOT.'media/image/npc/shop/'))
 					{
-						mkdir(DOCROOT . 'media/image/npc/shop/', 0, true);
+						mkdir(DOCROOT.'media/image/npc/shop/', 0, TRUE);
 					}
 
-					$up = Upload::save($image, $image['name'], DOCROOT . 'media/image/npc/shop/');
+					$up = Upload::save($image, $image['name'], DOCROOT.'media/image/npc/shop/');
 					// $up = Upload::save($image, DOCROOT . 'media/image/npc/shop/'.$image['name']);
 
 					if ($up != FALSE)
@@ -178,9 +178,9 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 						$file['status'] = 'success';
 						$file['msg'] = 'You\'ve successfully uploaded your item image';
 
-						if (!empty($msg))
+						if ( ! empty($msg))
 						{
-							$file['msg'] .= '<br />' . $msg;
+							$file['msg'] .= '<br />'.$msg;
 						}
 
 						$item->npc_img = $image['name'];
@@ -205,7 +205,8 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 				)
 			);
 			$this->response->body(json_encode($data));
-		} catch (ORM_Validation_Exception $e)
+		}
+		catch (ORM_Validation_Exception $e)
 		{
 			$errors = array();
 
@@ -213,7 +214,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 			foreach ($list as $field => $er)
 			{
-				if (!is_array($er))
+				if ( ! is_array($er))
 				{
 					$er = array($er);
 				}
@@ -227,7 +228,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_delete()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Delete'))
+		if ( ! $this->user->can('Admin_Item_Shops_Delete'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops delete');
 		}
@@ -244,7 +245,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_stock()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Stock'))
+		if ( ! $this->user->can('Admin_Item_Shops_Stock'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops stock');
 		}
@@ -292,8 +293,8 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 							'id' => $item->id,
 							'img' => $item->item->img(),
 							'name' => $item->item->name,
-							'price' => $item->min_price . ' - ' . $item->max_price,
-							'amount' => $item->min_amount . ' - ' . $item->max_amount,
+							'price' => $item->min_price.' - '.$item->max_price,
+							'amount' => $item->min_amount.' - '.$item->max_amount,
 							'cap_amount' => $item->cap_amount,
 							'frequency' => $item->frequency,
 							'last_restock' => Date::format($item->next_restock - $item->frequency)
@@ -315,7 +316,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_stock_item()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Stock_Item'))
+		if ( ! $this->user->can('Admin_Item_Shops_Stock_Item'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops stock item');
 		}
@@ -356,17 +357,17 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 	public function action_stock_save()
 	{
-		if (!$this->user->can('Admin_Item_Shops_Stock_Save'))
+		if ( ! $this->user->can('Admin_Item_Shops_Stock_Save'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item shops stock save');
 		}
 
 		$shop_id = $this->request->post('shop_id');
-		$item_id = ($this->request->post('item_id') == 0) ? null : $this->request->post('item_id');
+		$item_id = ($this->request->post('item_id') == 0) ? NULL : $this->request->post('item_id');
 		$values = $this->request->post();
 		$state = 'edit';
 
-		if ($item_id == null)
+		if ($item_id == NULL)
 		{
 			$i = ORM::factory('Item')
 				->where('item.name', '=', $values['item_name'])
@@ -422,7 +423,8 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 			$data = array(
 				'status' => 'saved'
 			);
-		} catch (ORM_Validation_Exception $e)
+		}
+		catch (ORM_Validation_Exception $e)
 		{
 			$errors = array();
 
@@ -430,7 +432,7 @@ class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 
 			foreach ($list as $field => $er)
 			{
-				if (!is_array($er))
+				if ( ! is_array($er))
 				{
 					$er = array($er);
 				}
