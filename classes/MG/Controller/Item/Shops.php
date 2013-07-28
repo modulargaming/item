@@ -10,9 +10,10 @@
  * @copyright  (c) Modular gaming
  */
 class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
+
 	protected $protected = TRUE;
 
-	//provide a list of all the shops
+	// provide a list of all the shops
 	public function action_index()
 	{
 		$this->view = new View_Item_Shops_Index;
@@ -28,13 +29,13 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 
 		$this->view = new View_Item_Shops_View;
 
-		if (!$shop->loaded())
+		if ( ! $shop->loaded())
 		{
 			Hint::error('No shop found');
 		}
 		elseif ($shop->status == 'closed')
 		{
-			//shop is closed
+			// shop is closed
 			Hint::error('The shop you want to visit seems to be closed.');
 		}
 		else
@@ -62,7 +63,7 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 		$shop_id = $this->request->param('id');
 		$shop = ORM::factory('Shop', $shop_id);
 
-		if (!$shop->loaded())
+		if ( ! $shop->loaded())
 		{
 			Hint::error('You can\'t buy an item from a shop that does not exist.');
 		}
@@ -79,25 +80,25 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 				->where('item_id', '=', $item_id)
 				->find();
 
-			if (!$item->loaded())
+			if ( ! $item->loaded())
 			{
 				Hint::error('The item you tried to buy has already been sold.');
 			}
 			elseif ($item->price > $this->user->get_property('points', $initial_points))
 			{
-				Hint::error('You don\'t have enough points to buy ' . $item->item->name);
+				Hint::error('You don\'t have enough points to buy '.$item->item->name);
 			}
 			else
 			{
-				//retract the points
+				// retract the points
 
 				$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $item->price);
 				$this->user->save();
 
-				//send over the item
-				Item::factory($item->item)->to_user($this->user, 'shops.' . $shop_id);
+				// send over the item
+				Item::factory($item->item)->to_user($this->user, 'shops.'.$shop_id);
 
-				//remove from shop if needed
+				// remove from shop if needed
 				if ($shop->stock_type != 'steady')
 				{
 					if ($item->stock - 1 == 0)
@@ -110,7 +111,7 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 						$item->save();
 					}
 				}
-				Hint::success('You\'ve successfully bought ' . $item->item->name);
+				Hint::success('You\'ve successfully bought '.$item->item->name);
 			}
 		}
 

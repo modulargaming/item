@@ -67,7 +67,7 @@ class MG_Item {
 	 */
 	public function to_user($user, $origin = "app", $amount = 1, $location = 'inventory')
 	{
-		if (!Valid::digit($amount))
+		if ( ! Valid::digit($amount))
 		{
 			throw new Item_Exception('The supplied amount should be a number.');
 		}
@@ -76,13 +76,13 @@ class MG_Item {
 		{
 			$user = ORM::factory('User', $user);
 		}
-		else if (!is_a($user, 'Model_User'))
+		elseif ( ! is_a($user, 'Model_User'))
 		{
 			throw new Item_Exception('The supplied user does not come from a model.');
 		}
 
 
-		if (!$user->loaded())
+		if ( ! $user->loaded())
 		{
 			throw new Item_Exception('The supplied user does not exist.');
 		}
@@ -98,20 +98,20 @@ class MG_Item {
 
 			if ($user_item->loaded())
 			{
-				//update item amount
+				// update item amount
 				$user_item->amount($action, $amount);
 			}
-			else if ($action == '+')
+			elseif ($action == '+')
 			{
 				$id = $this->_item->id;
 
-				//create new copy
+				// create new copy
 				$user_item = ORM::factory('User_Item')
 					->values(array('user_id' => $user->id, 'item_id' => $id, 'location' => $location, 'amount' => $amount))
 					->save();
 			}
 
-			return Journal::log('item.in.' . $origin, 'item', 'Player received :amount :item_name @ :origin', array(
+			return Journal::log('item.in.'.$origin, 'item', 'Player received :amount :item_name @ :origin', array(
 				':amount' => $amount,
 				':item_name' => $user_item->item->name($amount, FALSE),
 				':origin' => str_replace('.', ' ', $origin)
@@ -144,11 +144,11 @@ class MG_Item {
 			->where('user_id', '=', $user->id)
 			->find();
 
-		if ($user_item->loaded() && $amount == FALSE)
+		if ($user_item->loaded() AND $amount == FALSE)
 		{
 			return $user_item;
 		}
-		else if ($user_item->loaded() AND $user_item->amount >= $amount)
+		elseif ($user_item->loaded() AND $user_item->amount >= $amount)
 		{
 			return $user_item;
 		}
@@ -158,7 +158,8 @@ class MG_Item {
 		}
 	}
 
-	public function item() {
+	public function item()
+	{
 		return $this->_item;
 	}
 
@@ -184,7 +185,7 @@ class MG_Item {
 		{
 			$user = Auth::instance()->get_user();
 		}
-		else if ($other_user != NULL)
+		elseif ($other_user != NULL)
 		{
 			$user = $other_user;
 		}
@@ -236,14 +237,14 @@ class MG_Item {
 
 		foreach ($input as $k => $c)
 		{
-			//if we're dealing string as parameter or an assoc array
-			if (!is_array($c) OR count(array_filter(array_keys($c), 'is_string')) > 0)
+			// if we're dealing string as parameter or an assoc array
+			if ( ! is_array($c) OR count(array_filter(array_keys($c), 'is_string')) > 0)
 			{
 				$commands[] = array('name' => $k, 'param' => $c);
 			}
 			else
 			{
-				//if multiple command instances were defined (non-assoc array)
+				// if multiple command instances were defined (non-assoc array)
 				foreach ($c as $p)
 				{
 					$commands[] = array('name' => $k, 'param' => $p);
@@ -272,7 +273,7 @@ class MG_Item {
 
 			foreach ($paths as $files)
 			{
-				$replacements = array_merge(Kohana::include_paths(), array('classes' . DIRECTORY_SEPARATOR . 'Item' . DIRECTORY_SEPARATOR . 'Command' . DIRECTORY_SEPARATOR, '.php'));
+				$replacements = array_merge(Kohana::include_paths(), array('classes'.DIRECTORY_SEPARATOR.'Item'.DIRECTORY_SEPARATOR.'Command'.DIRECTORY_SEPARATOR, '.php'));
 
 				if (is_array($files))
 				{
@@ -302,7 +303,7 @@ class MG_Item {
 	 */
 	static public function filter_type_dir($value)
 	{
-		return (substr($value, -1) != '/') ? $value . '/' : $value;
+		return (substr($value, -1) != '/') ? $value.'/' : $value;
 	}
 
 	/**
@@ -319,7 +320,7 @@ class MG_Item {
 		{
 			$cmd = Item_Command::factory($command['name']);
 
-			if (!$cmd->validate($command['param']))
+			if ( ! $cmd->validate($command['param']))
 			{
 				$validation->error('commands', $command['name']);
 			}

@@ -35,7 +35,7 @@ class MG_Item_Command_Pet_Transform extends Item_Command_Pet {
 		return $specie->loaded();
 	}
 
-	public function perform($item, $param, $pet = null)
+	public function perform($item, $param, $pet = NULL)
 	{
 		$specie = ORM::factory('Pet_Specie')
 		->where('pet_specie.name', '=', $param)
@@ -44,6 +44,6 @@ class MG_Item_Command_Pet_Transform extends Item_Command_Pet {
 		$pet->specie_id = $specie->id;
 		$pet->save();
 
-		return 'Your ' . $pet->name . ' has changed in to a ' . $specie->name;
+		return 'Your '.$pet->name.' has changed in to a '.$specie->name;
 	}
 }

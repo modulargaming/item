@@ -55,7 +55,7 @@ class MG_View_Item_Trade_Lot extends Abstract_View_Lot {
 		$lot = array(
 			'id'           => $this->lot->id,
 			'is_owner'     => $this->owner_actions,
-			'can_bid'      => ($this->bid == FALSE && $this->owner_actions != FALSE) ? FALSE : array('link' => Route::url('item.trade.bid', array('id' => $this->lot->id))),
+			'can_bid'      => ($this->bid == FALSE AND $this->owner_actions != FALSE) ? FALSE : array('link' => Route::url('item.trade.bid', array('id' => $this->lot->id))),
 			'description'  => $this->lot->description,
 			'inventory'    => $inventory,
 			'username'     => $this->lot->user->username,
@@ -75,7 +75,7 @@ class MG_View_Item_Trade_Lot extends Abstract_View_Lot {
 	 */
 	public function bid($bid = NULL)
 	{
-		if ($bid == NULL && $this->bid != FALSE)
+		if ($bid == NULL AND $this->bid != FALSE)
 		{
 			$bid = $this->bid;
 		}

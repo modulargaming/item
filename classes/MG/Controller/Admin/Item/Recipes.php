@@ -13,7 +13,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 	public function action_index()
 	{
-		if (!$this->user->can('Admin_Item_Recipes_Index'))
+		if ( ! $this->user->can('Admin_Item_Recipes_Index'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item recipes index');
 		}
@@ -29,7 +29,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 	public function action_paginate()
 	{
-		if (!$this->user->can('Admin_Item_Recipes_Paginate'))
+		if ( ! $this->user->can('Admin_Item_Recipes_Paginate'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item recipies paginate');
 		}
@@ -59,13 +59,13 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 		}
 		else
 		{
-			throw new HTTP_Exception_500();
+			throw HTTP_Exception::factory(500, 'Internal server error');
 		}
 	}
 
 	public function action_retrieve()
 	{
-		if (!$this->user->can('Admin_Item_Recipes_Retrieve'))
+		if ( ! $this->user->can('Admin_Item_Recipes_Retrieve'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item recipes retrieve');
 		}
@@ -103,7 +103,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 	public function action_save()
 	{
-		if (!$this->user->can('Admin_Item_Recipes_Save'))
+		if ( ! $this->user->can('Admin_Item_Recipes_Save'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item recipes save');
 		}
@@ -122,7 +122,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 		try
 		{
-			//validate crafted item
+			// validate crafted item
 			$crafted = ORM::factory('Item')
 				->where('item.name', '=', $values['crafted_item'])
 				->find();
@@ -130,7 +130,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 			if ($crafted->loaded())
 			{
-				//validate item materials
+				// validate item materials
 				$mat_fail = FALSE;
 
 				if (count($values['materials']) > 0)
@@ -140,14 +140,15 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 						$mat = ORM::factory('Item')
 							->where('item.name', '=', $material['name'])
 							->find();
-						if (!$mat->loaded())
+
+						if ( ! $mat->loaded())
 						{
-							$mat_fail = $material['name'] . ' does not exist';
+							$mat_fail = $material['name'].' does not exist';
 							break;
 						}
-						else if (!Valid::digit($material['amount']))
+						elseif ( ! Valid::digit($material['amount']))
 						{
-							$mat_fail = $material['name'] . '\'s amount should be a number';
+							$mat_fail = $material['name'].'\'s amount should be a number';
 							break;
 						}
 						else
@@ -166,7 +167,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 					if (count($values['materials']) > 0)
 					{
-						//if we're updating delete old data
+						// if we're updating delete old data
 						if ($values['id'] != NULL)
 						{
 							foreach ($item->materials->find_all() as $mat)
@@ -190,7 +191,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 						'row' => array(
 							$item->name,
 							$item->materials->count_all(),
-							URL::base() . $item->item->img(),
+							URL::base().$item->item->img(),
 							$item->id
 						)
 					);
@@ -205,7 +206,8 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 			{
 				return $this->response->body(json_encode(array('action' => 'error', 'errors' => array(array('field' => 'crafted_item', 'msg' => array('This item does not seem to exist.'))))));
 			}
-		} catch (ORM_Validation_Exception $e)
+		}
+		catch (ORM_Validation_Exception $e)
 		{
 			$errors = array();
 
@@ -213,7 +215,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 			foreach ($list as $field => $er)
 			{
-				if (!is_array($er))
+				if ( ! is_array($er))
 				{
 					$er = array($er);
 				}
@@ -227,7 +229,7 @@ class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 
 	public function action_delete()
 	{
-		if (!$this->user->can('Admin_Item_Recipes_Delete'))
+		if ( ! $this->user->can('Admin_Item_Recipes_Delete'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item recipes delete');
 		}

@@ -30,22 +30,28 @@ class MG_Item_Command_Pet_Feed extends Item_Command_Pet {
 		return (Valid::digit($param) AND $param > 0);
 	}
 
-	public function perform($item, $param, $pet=null)
+	public function perform($item, $param, $pet = NULL)
 	{
-		if($pet->hunger == 100)
+		if ($pet->hunger == 100)
+		{
 			return FALSE;
+		}
 		else
 		{
 			$level = $pet->hunger +  $param;
 
-			if($level > 100)
+			if ($level > 100)
+			{
 				$pet->hunger = 100;
+			}
 			else
+			{
 				$pet->hunger = $level;
+			}
 
 			$pet->save();
 
-			return $pet->name.' has been fed '. $item->item->name;
+			return $pet->name.' has been fed '.$item->item->name;
 		}
 	}
 }

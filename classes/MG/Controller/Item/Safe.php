@@ -51,7 +51,7 @@ class MG_Controller_Item_Safe extends Abstract_Controller_Frontend {
 				{
 					$i = ORM::factory('User_Item', $id);
 
-					if ($i->loaded() && $i->location == 'safe' && $i->user_id == $this->user->id)
+					if ($i->loaded() AND $i->location == 'safe' AND $i->user_id == $this->user->id)
 					{
 						if ($item['amount'] > $i->amount)
 						{
@@ -62,7 +62,7 @@ class MG_Controller_Item_Safe extends Abstract_Controller_Frontend {
 									))
 							);
 						}
-						else if ($item['location'] == 'shop')
+						elseif ($item['location'] == 'shop')
 						{
 							$shop = ORM::factory('User_Shop')
 								->where('user_id', '=', $this->user->id)
@@ -74,11 +74,11 @@ class MG_Controller_Item_Safe extends Abstract_Controller_Frontend {
 								->where('item_id', '=', $i->item_id)
 								->find();
 
-							if (!$shop->loaded())
+							if ( ! $shop->loaded())
 							{
 								Hint::error('You don\'t have a shop yet.');
 							}
-							else if (!$shop->inventory_space() && !$shop_item->loaded())
+							elseif ( ! $shop->inventory_space() AND ! $shop_item->loaded())
 							{
 								Hint::error('Your shop is already full.');
 							}
@@ -88,7 +88,7 @@ class MG_Controller_Item_Safe extends Abstract_Controller_Frontend {
 								Hint::success(__('You\'ve moved :items to your shop.', array(':items' => $i->item->name($item['amount']))));
 							}
 						}
-						else if ($item['location'] == 'inventory')
+						elseif ($item['location'] == 'inventory')
 						{
 							$i->move('inventory', $item['amount']);
 							Hint::success(__('You\'ve moved :items to your inventory.', array(':items' => $i->item->name($item['amount']))));

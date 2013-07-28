@@ -34,16 +34,17 @@ class MG_Item_Command_Pet_Paint extends Item_Command_Pet {
 		return $color->loaded();
 	}
 
-	public function perform($item, $param, $pet=null)
+	public function perform($item, $param, $pet = NULL)
 	{
 		$colour = ORM::factory('Pet_Colour')
 		->where('pet_colour.name', '=', $param)
 		->find();
 
-		if ($pet->specie->has('colours', $colour)) {
+		if ($pet->specie->has('colours', $colour))
+		{
 			$pet->colour_id = $colour->id;
 			$pet->save();
-			return $pet->name . ' changed into ' . $colour->name;
+			return $pet->name.' changed into '.$colour->name;
 		}
 		else
 			return FALSE;

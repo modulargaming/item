@@ -21,14 +21,16 @@ class MG_Item_Command_Move_Safe extends Item_Command_Move {
 		return NULL;
 	}
 
-	public function perform($item, $amount, $data=null)
+	public function perform($item, $amount, $data = NULL)
 	{
 		$name = $item->item->name($amount);
 
-		if(!$item->move('safe', $amount))
+		if ( ! $item->move('safe', $amount))
+		{
 			return FALSE;
-		else
-			return 'You have successfully moved ' . $name . ' to your safe.';
+		}
+
+		return 'You have successfully moved '.$name.' to your safe.';
 	}
 
 }

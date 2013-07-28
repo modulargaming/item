@@ -23,14 +23,20 @@ class MG_Item_Command_Move_Shop extends Item_Command_Move {
 		return NULL;
 	}
 
-	public function perform($item, $amount, $data=null)
+	public function perform($item, $amount, $data = NULL)
 	{
+		if ($item->item->transferable == FALSE)
+		{
+			return FALSE;
+		}
 		$name = $item->item->name($amount);
 
-		if(!$item->move('shop', $amount))
+		if ( ! $item->move('shop', $amount))
+		{
 			return FALSE;
-		else
-			return 'You have successfully moved ' . $name . ' to your shop.';
+		}
+
+		return 'You have successfully moved '.$name.' to your shop.';
 	}
 
 }

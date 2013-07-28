@@ -90,15 +90,15 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 			Database::instance()->begin();
 
-			//let's start by validating and moving the items away from the inventory
+			// let's start by validating and moving the items away from the inventory
 			foreach ($items as $id => $amount)
 			{
 
-				if (!empty($amount) && $amount > 0)
+				if ( ! empty($amount) AND $amount > 0)
 				{
 					$item = ORM::factory('User_Item', $id);
 
-					if (!$item->loaded())
+					if ( ! $item->loaded())
 					{
 						Hint::error('You want to trade an item that does not seem to exist.');
 						break;
@@ -121,7 +121,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 					$a_count += $amount;
 
-					if ($config['count_amount'] == TRUE && $a_count > $config['max_items'])
+					if ($config['count_amount'] == TRUE AND $a_count > $config['max_items'])
 					{
 						Hint::error(__('You can\'t trade more than a total of :amount items.', array(':amount' => $config['max_items'])));
 						break;
@@ -147,7 +147,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 					$lot->description = $this->request->post('description');
 					$lot->save();
 
-					//point the items to the created lot
+					// point the items to the created lot
 					foreach ($stored_items as $item)
 					{
 						$item->parameter_id = $lot->id;
@@ -182,12 +182,12 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$lot = ORM::factory('User_Trade', $id);
 
-		if (!$lot->loaded())
+		if ( ! $lot->loaded())
 		{
 			Hint::error('You tried deleting a lot that does not exists.');
 			$this->redirect(Route::get('item.trade.index'));
 		}
-		else if ($lot->user_id != $this->user_id)
+		elseif ($lot->user_id != $this->user_id)
 		{
 			Hint::error('You tried deleting a lot that isn\'t yours.');
 			$this->redirect(Route::get('item.trade.index'));
@@ -195,10 +195,10 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$bids = $lot->bids->find_all();
 
-		//remove all bids made to this lot
+		// remove all bids made to this lot
 		if (count($bids) > 0)
 		{
-			$log = Journal::log('item.trade.' . $id . '.delete', 'item', 'Trade #id deleted', array(':id' => $id));
+			$log = Journal::log('item.trade.'.$id.'.delete', 'item', 'Trade #id deleted', array(':id' => $id));
 
 			foreach ($bids as $bid)
 			{
@@ -221,7 +221,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 			}
 		}
 
-		//move back the lot's items to the inventory
+		// move back the lot's items to the inventory
 		foreach ($lot->items() as $item)
 		{
 			$item->move('inventory', '*');
@@ -245,7 +245,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 		$lot = ORM::factory('User_Trade', $id);
 		$this->view = new View_Item_Trade_Lot;
 
-		if (!$lot->loaded())
+		if ( ! $lot->loaded())
 		{
 			Hint::error('The lot you want to load does not seem to exist.');
 		}
@@ -254,7 +254,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 			$this->view->lot = $lot;
 			$this->view->currency_image = Kohana::$config->load('items.trade.currency_image');
 
-			//let's see if the user has put down a bid on this lot
+			// let's see if the user has put down a bid on this lot
 			if ($this->user->id != $lot->user_id)
 			{
 				$bid = ORM::factory('User_Trade_bid')
@@ -269,7 +269,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 			}
 			else
 			{
-				//the owner's view
+				// the owner's view
 				$this->view->owner_actions = TRUE;
 			}
 		}
@@ -285,12 +285,12 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 		$lot = ORM::factory('User_Trade', $id);
 		$this->view = new View_Item_Trade_Bid;
 
-		if (!$lot->loaded())
+		if ( ! $lot->loaded())
 		{
 			Hint::error('No trade lot found to bid on.');
 			$this->view->unable = TRUE;
 		}
-		else if (count($items) == 0)
+		elseif (count($items) == 0)
 		{
 			Hint::error('You don\'t have any items in your invetnory to put up for trade.');
 			$this->view->unable = TRUE;
@@ -324,11 +324,11 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 		{
 			Hint::error(__('You can\'t bid on a lot with more than :amount items', array(':amount' => $config['max_items'])));
 		}
-		else if (!empty($points) && (!Valid::digit($points) || points < 0))
+		elseif ( ! empty($points) AND ( ! Valid::digit($points) OR $points < 0))
 		{
 			Hint::error(__('If you want to add points to your bid specify a number (:points)', array(':points' => $points)));
 		}
-		else if (Valid::digit($points) && points > $this->user->points)
+		elseif (Valid::digit($points) AND $points > $this->user->points)
 		{
 			Hint::error(__('You don\'t have enough points to add to this bid (:points)', array(':points' => $points)));
 		}
@@ -340,15 +340,15 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 			Database::instance()->begin();
 
-			//let's start by validating and moving the items away from the inventory
+			// let's start by validating and moving the items away from the inventory
 			foreach ($items as $id => $amount)
 			{
 
-				if (!empty($amount) && $amount > 0)
+				if ( ! empty($amount) AND $amount > 0)
 				{
 					$item = ORM::factory('User_Item', $id);
 
-					if (!$item->loaded())
+					if ( ! $item->loaded())
 					{
 						Hint::error('You want to bid an item that does not seem to exist.');
 						break;
@@ -371,7 +371,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 					$a_count += $amount;
 
-					if ($config['count_amount'] == TRUE && $a_count > $config['max_items'])
+					if ($config['count_amount'] == TRUE AND $a_count > $config['max_items'])
 					{
 						Hint::error(__('You can\'t bid more than a total of :amount items.', array(':amount' => $config['max_items'])));
 						break;
@@ -381,13 +381,13 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 				}
 			}
 
-			//check stack total if needed
-			if ($config['count_amount'] == FALSE && count($stored_items) > $config['max_items'])
+			// check stack total if needed
+			if ($config['count_amount'] == FALSE AND count($stored_items) > $config['max_items'])
 			{
 				Hint::error(__('You can\'t bid more than a total of :amount different items.', array(':amount' => $config['max_items'])));
 			}
-			//check stack amount total if needed
-			else if ($config['count_amount'] == FALSE && $a_count > $config['max_in_stack'])
+			// check stack amount total if needed
+			elseif ($config['count_amount'] == FALSE AND $a_count > $config['max_in_stack'])
 			{
 				Hint::error(__('You can\'t bid more than a total of :amount items.', array(':amount' => $config['max_in_stack'])));
 			}
@@ -407,7 +407,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 					$bid->lot_id = $id;
 					$bid->user_id = $this->user->id;
 
-					//deduct points if specified
+					// deduct points if specified
 					if (Valid::digit($points))
 					{
 						$this->user->points -= $points;
@@ -418,7 +418,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 					$bid->save();
 
 					$item_names = array();
-					//point the items to the created lot
+					// point the items to the created lot
 					foreach ($stored_items as $item)
 					{
 						$item->parameter_id = $bid->id;
@@ -437,12 +437,12 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 					return $this->redirect(Route::get('item.trade.bid')->uri(array('id' => $id)));
 				}
 
-				$log = Journal::log('item.trade.bid.' . $bid->lot_id, 'items', 'Made a bid with :amount items and :points points', array(
-					':amount' => $a_count, ':points' => (int)$points, 'items' => $item_names));
+				$log = Journal::log('item.trade.bid.'.$bid->lot_id, 'items', 'Made a bid with :amount items and :points points', array(
+					':amount' => $a_count, ':points' => (int) $points, 'items' => $item_names));
 
 				$log->notify($bid->lot_user, 'items.trades.bid', array(
 					':user' => $this->user->username,
-					':lot' => '<strong>#<a href="' . Route::url('item.trade.lot', array('id' => $bid->lot_id)) . '">' . $bid->lot_id . '</a></strong>'
+					':lot' => '<strong>#<a href="'.Route::url('item.trade.lot', array('id' => $bid->lot_id)).'">'.$bid->lot_id.'</a></strong>'
 				));
 
 				Database::instance()->commit();
@@ -477,11 +477,11 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$bid = ORM::factory('User_Trade_Bid', $id);
 
-		if (!$bid->loaded())
+		if ( ! $bid->loaded())
 		{
 			Hint::error('No bid found to reject');
 		}
-		else if ($bid->trade->user_id != $this->user->id)
+		elseif ($bid->trade->user_id != $this->user->id)
 		{
 			Hint::error('You can\'t accept a bid on a trade lot that isn\'t yours.');
 			$this->redirect(Route::get('item.trade.lot', array('id' => $id)));
@@ -490,7 +490,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 		{
 			$lot = $bid->trade;
 
-			//send offered items to the trade's owner
+			// send offered items to the trade's owner
 			$offered_items = $bid->items();
 
 			foreach ($offered_items as $item)
@@ -498,7 +498,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 				$item->transfer($lot->user, $item->amount);
 			}
 
-			//if points were added give them to the trade owner
+			// if points were added give them to the trade owner
 			if ($bid->points > 0)
 			{
 				$user = $lot->user;
@@ -506,7 +506,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 				$user->save();
 			}
 
-			//send the items up for trade to the winning bidder
+			// send the items up for trade to the winning bidder
 			$lot_items = $lot->items();
 
 			foreach ($lot_items as $item)
@@ -514,7 +514,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 				$item->transfer($bid->user, $item->amount);
 			}
 
-			$log = Journal::log('item.trade.' . $id . '.accept', 'item', 'Trade #id completed', array(':id' => $id));
+			$log = Journal::log('item.trade.'.$id.'.accept', 'item', 'Trade #id completed', array(':id' => $id));
 			$log->notify($user, 'items.trades.accept', array(':username' => $this->user->username));
 
 			Hint::success('You\'ve accepted bid #:id made by :username', array(':id' => $bid->id, ':username' => $bid->user->username));
@@ -534,7 +534,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$bid = ORM::factory('User_Trade_Bid', $id);
 
-		if (!$bid->loaded())
+		if ( ! $bid->loaded())
 		{
 			return Hint::error('No bid found to reject');
 		}
@@ -563,7 +563,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 			Hint::success('You\'ve rejected bid #:id made by :username', array(':id' => $bid->id, ':username' => $user->username));
 
-			$log = Journal::log('item.trade.' . $id . '.reject', 'item', 'Bid from :user declined', array(':user' => $user->username));
+			$log = Journal::log('item.trade.'.$id.'.reject', 'item', 'Bid from :user declined', array(':user' => $user->username));
 			$log->notify($user, 'items.trades.reject', array(':lot' => $id));
 			$bid->delete();
 		}
@@ -580,9 +580,9 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$bid = ORM::factory('User_Trade_Bid', $id);
 
-		if (!$bid->loaded())
+		if ( ! $bid->loaded())
 		{
-			//@todo change to HTTP exception
+			// @todo change to HTTP exception
 			return Hint::error('No bid found to reject');
 		}
 
@@ -609,7 +609,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 			Hint::success('You\'ve retracted your bid');
 
-			$log = Journal::log('item.trade.' . $id . '.retract', 'item', 'Retracted bid for :id', array(':id' => $id));
+			$log = Journal::log('item.trade.'.$id.'.retract', 'item', 'Retracted bid for :id', array(':id' => $id));
 			$log->notify($log, $bid->lot->user, 'items.trades.retract', array(':lot' => $id, ':username' => $this->user->username));
 
 			$bid->delete();
@@ -629,7 +629,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 		$items = ORM::factory('User_Item')
 			->where('location', '=', 'trade.lot')
-			->where('item.name', 'LIKE', '%' . $term . '%');
+			->where('item.name', 'LIKE', '%'.$term.'%');
 
 		$paginate = Paginate::factory($items, array('total_items' => $limit), $this->request, array('t', 'l'))->execute();
 

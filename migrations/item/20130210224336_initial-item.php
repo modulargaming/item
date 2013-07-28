@@ -14,7 +14,7 @@ class Migration_Item_20130210224336 extends Minion_Migration_Base {
 	 */
 	public function up(Kohana_Database $db)
 	{
-		//set up items
+		// set up items
 		 $db->query(NULL, "CREATE TABLE IF NOT EXISTS `items` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `type_id` int(11) unsigned NOT NULL,
@@ -53,8 +53,8 @@ class Migration_Item_20130210224336 extends Minion_Migration_Base {
 			) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 		 ");
 
-		 //setup item recipes
-		 $db->query(null, "
+		 // setup item recipes
+		 $db->query(NULL, "
 			CREATE TABLE IF NOT EXISTS `item_recipes` (
 			  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
 			  `name` varchar(50) NOT NULL,

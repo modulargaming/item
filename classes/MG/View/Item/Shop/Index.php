@@ -37,6 +37,7 @@ class MG_View_Item_Shop_Index extends Abstract_View_Inventory {
 		$extra = array(
 			'size'    => $this->shop['size'],
 			'content' => $this->shop['size'] * $this->units['unit_size'],
+			'cost'    => $this->units['unit_cost'],
 			'link'    => Route::url('item.user_shop.upgrade')
 		);
 

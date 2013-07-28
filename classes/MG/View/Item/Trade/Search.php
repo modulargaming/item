@@ -75,7 +75,7 @@ class MG_View_Item_Trade_Search extends Abstract_View_Inventory {
 				'href'  => Route::url('item.trade.index')
 			),
 			array(
-				'title' => ($this->term != FALSE) ? "'" . $this->term . "'" : 'Search',
+				'title' => ($this->term != FALSE) ? "'".$this->term."'" : 'Search',
 				'href'  => Route::url('item.trade.search')
 			)
 		));

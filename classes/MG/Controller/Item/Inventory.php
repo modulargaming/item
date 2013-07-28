@@ -10,6 +10,7 @@
  * @copyright  (c) Modular gaming
  */
 class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
+
 	protected $protected = TRUE;
 
 	public function action_index()
@@ -45,21 +46,21 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 		$errors = array();
 
-		if (!$item->loaded())
+		if ( ! $item->loaded())
 		{
 			Hint::error('Item could not be found');
 		}
-		else if ($item->user_id != $this->user->id)
+		elseif ($item->user_id != $this->user->id)
 		{
 			Hint::error('You can\'t access another player\'s item');
 		}
-		else if ($item->location != 'inventory')
+		elseif ($item->location != 'inventory')
 		{
 			Hint::error('The item you want to view is not located in your inventory.');
 		}
 		else
 		{
-			//generate action list
+			// generate action list
 			$actions = array();
 			$extra_action_fields = array();
 
@@ -105,7 +106,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 				->where('item_id', '=', $item->item_id)
 				->find();
 
-			if ($user_shop->loaded() && ($user_shop->inventory_space() == TRUE || ($user_shop->inventory_space() == FALSE && $shop_item->loaded())))
+			if ($item->item->transferable == FALSE AND $user_shop->loaded() AND ($user_shop->inventory_space() == TRUE OR ($user_shop->inventory_space() == FALSE AND $shop_item->loaded())))
 			{
 				$actions['move_shop'] = array(
 					'item'  => 'Move to your shop',
@@ -135,31 +136,31 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 		}
 
-		//get a normalised array based on Hints' types
+		// get a normalised array based on Hints' types
 		$dump = Hint::dump();
 
 		if ($this->request->is_ajax())
 		{
 			$this->response->headers('Content-Type', 'application/json');
 
-			//Delete the Hints from sessions
+			// Delete the Hints from sessions
 			Hint::ajax_dump();
 
-			//return normalized ajax response
+			// return normalized ajax response
 			return $this->response->body(json_encode(array_merge($dump, $ajax)));
 		}
 
-		//if the response's status is an error there's nothing to show anymore
+		// if the response's status is an error there's nothing to show anymore
 		if ($dump['status'] == 'error')
 		{
 			return $this->redirect(Route::get('item.inventory')->uri());
 		}
 
-		//otherwise render the page
+		// otherwise render the page
 		$this->view = new View_Item_Inventory_View;
 		$this->view->item = $item;
 		$this->view->action_list = $actions;
-		//Assets::js('item.inventory', 'item/inventory/view.js');
+		// Assets::js('item.inventory', 'item/inventory/view.js');
 	}
 
 	public function action_consume()
@@ -169,19 +170,19 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 		$errors = array();
 
-		if (!$item->loaded())
+		if ( ! $item->loaded())
 		{
 			Hint::error('You can\'t use an item that does not exist');
 		}
-		else if ($item->user_id != $this->user->id)
+		elseif ($item->user_id != $this->user->id)
 		{
 			Hint::error('You can\'t access another player\'s item');
 		}
-		else if ($item->location != 'inventory')
+		elseif ($item->location != 'inventory')
 		{
 			Hint::error('The item you want to view is not located in your inventory');
 		}
-		else if ($action == NULL)
+		elseif ($action == NULL)
 		{
 			Hint::error('No action to perform has been specified');
 		}
@@ -191,18 +192,18 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 			if (Valid::digit($action))
 			{
-				//we'll want to perform an action on a pet
+				// we'll want to perform an action on a pet
 				$pet = ORM::factory('User_Pet', $action);
 
-				if (!$pet->loaded())
+				if ( ! $pet->loaded())
 				{
 					Hint::error('No existing pet has been specified');
 				}
-				else if ($pet->user_id != $this->user->id)
+				elseif ($pet->user_id != $this->user->id)
 				{
 					Hint::error('You can\'t let a pet comsume this item if it\'s not yours');
 				}
-				else if ($def_cmd->pets_required() == FALSE)
+				elseif ($def_cmd->pets_required() == FALSE)
 				{
 					Hint::error('can\'t perform this item action on a pet');
 				}
@@ -221,7 +222,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 						if ($res == FALSE)
 						{
-							//the command couldn't be performed, spit out error, rollback changes and break the loop
+							// the command couldn't be performed, spit out error, rollback changes and break the loop
 							Hint::error(__(':item_name could not be used on :pet_name', array(':item_name' => $item->item->name, ':pet_name' => $pet->name)));
 						$error = TRUE;
 							$db->rollback();
@@ -269,7 +270,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 							if ($res == FALSE)
 							{
-								//the command couldn't be performed, spit out error, rollback changes and break the loop
+								// the command couldn't be performed, spit out error, rollback changes and break the loop
 								Hint::error(__(':item_name could not be used', array(':item_name' => $item->name)));
 								$db->rollback();
 								$error = TRUE;
@@ -293,7 +294,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 						}
 
 						break;
-					case 'remove' : //takes an amount
+					case 'remove' : // takes an amount
 						$amount = $this->request->post('amount');
 
 						if ($amount == NULL)
@@ -301,13 +302,13 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 							$amount = 1;
 						}
 
-						if (!Valid::digit($amount))
+						if ( ! Valid::digit($amount))
 						{
 							Hint::error('The amount you submitted isn\'t a number.');
 						}
-						else if ($amount <= 0 OR $amount > $item->amount)
+						elseif ($amount <= 0 OR $amount > $item->amount)
 						{
-							Hint::error('You only have ' . $item->name() . ', not ' . $amount);
+							Hint::error('You only have '.$item->name().', not '.$amount);
 						}
 						else
 						{
@@ -329,7 +330,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 							));
 						}
 						break;
-					case 'gift' : //takes a username
+					case 'gift' : // takes a username
 						$username = $this->request->post('username');
 
 						if ($this->user->username == $username)
@@ -359,10 +360,11 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 						}
 						break;
 					default :
-						if (substr($action, 0, 5) == 'move_') //Moving items can take an amount
+						// Moving items can take an amount
+						if (substr($action, 0, 5) == 'move_')
 						{
 							$location = substr($action, 5);
-							$cmd = Item_Command::factory('Move_' . ucfirst($location));
+							$cmd = Item_Command::factory('Move_'.ucfirst($location));
 
 							$amount = $this->request->post('amount');
 
@@ -371,13 +373,13 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 								$amount = 1;
 							}
 
-							if (!Valid::digit($amount))
+							if ( ! Valid::digit($amount))
 							{
 								Hint::error('The amount you submitted isn\'t a number.');
 							}
-							else if ($amount <= 0 OR $amount > $item->amount)
+							elseif ($amount <= 0 OR $amount > $item->amount)
 							{
-								Hint::error('You only have ' . $item->name() . ', not ' . $amount);
+								Hint::error('You only have '.$item->name().', not '.$amount);
 							}
 							else
 							{
@@ -385,7 +387,7 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 							}
 
 						}
-						else //fallback to any unexisting item actions
+						else // fallback to any unexisting item actions
 						{
 							Hint::error('The action you want to perform with this item does not exist');
 						}
@@ -397,15 +399,15 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 		$show = Kohana::$config->load('items.inventory.consume_show_results');
 		$output = array();
 
-		if (!is_array($results))
+		if ( ! is_array($results))
 		{
 			$output[] = $results;
 		}
-		else if ($show == 'first')
+		elseif ($show == 'first')
 		{
 			$output[] = $results[0];
 		}
-		else if (!empty($results))
+		elseif ( ! empty($results))
 		{
 			foreach ($results as $result)
 				$output[] = $result;

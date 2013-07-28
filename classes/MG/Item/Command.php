@@ -21,9 +21,9 @@ abstract class MG_Item_Command {
 	 */
 	static public function factory($command, $validation = NULL)
 	{
-		if (strpos($command, 'Item_Command') === false)
+		if (strpos($command, 'Item_Command') === FALSE)
 		{
-			$command = 'Item_Command_' . $command;
+			$command = 'Item_Command_'.$command;
 		}
 		return new $command($validation);
 	}
@@ -34,7 +34,7 @@ abstract class MG_Item_Command {
 	 */
 	public $default = FALSE;
 
-	//this command would be the only one, no extra commands would be able to get assigned
+	// this command would be the only one, no extra commands would be able to get assigned
 	public $allow_more = TRUE;
 
 	/**
@@ -99,17 +99,17 @@ abstract class MG_Item_Command {
 	{
 		$def = $this->_build($name);
 
-		//if loading pets is required
+		// if loading pets is required
 		$def['pets'] = ($this->pets_required()) ? 1 : 0;
 
-		//if multiple instances of the command may be defined
-		if (!isset($def['multiple']))
+		// if multiple instances of the command may be defined
+		if ( ! isset($def['multiple']))
 		{
 			$def['multiple'] = 0;
 		}
 
-		//if autocomplete search is needed
-		if (!isset($def['search']))
+		// if autocomplete search is needed
+		if ( ! isset($def['search']))
 		{
 			$def['search'] = 0;
 		}

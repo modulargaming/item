@@ -13,7 +13,7 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 
 	public function action_index()
 	{
-		if (!$this->user->can('Admin_Item_Types_Index'))
+		if ( ! $this->user->can('Admin_Item_Types_Index'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item types index');
 		}
@@ -24,7 +24,7 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 
 	public function action_paginate()
 	{
-		if (!$this->user->can('Admin_Item_Types_Paginate'))
+		if ( ! $this->user->can('Admin_Item_Types_Paginate'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item types paginate');
 		}
@@ -51,13 +51,13 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 		}
 		else
 		{
-			throw new HTTP_Exception_500();
+			throw HTTP_Exception::factory(500, 'Internal server error');
 		}
 	}
 
 	public function action_retrieve()
 	{
-		if (!$this->user->can('Admin_Item_Types_Retrieve'))
+		if ( ! $this->user->can('Admin_Item_Types_Retrieve'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item types retrieve');
 		}
@@ -82,7 +82,7 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 
 	public function action_save()
 	{
-		if (!$this->user->can('Admin_Item_Types_Save'))
+		if ( ! $this->user->can('Admin_Item_Types_Save'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item types save');
 		}
@@ -105,10 +105,10 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 			$item->values($values, array('name', 'status', 'action', 'default_command', 'img_dir'));
 			$item->save();
 
-			//create the item type directory
-			if ($id == null)
+			// create the item type directory
+			if ($id == NULL)
 			{
-				mkdir(DOCROOT . 'media' . DIRECTORY_SEPARATOR . 'image' . DIRECTORY_SEPARATOR . 'items' . DIRECTORY_SEPARATOR . $values['img_dir']);
+				mkdir(DOCROOT.'media'.DIRECTORY_SEPARATOR.'image'.DIRECTORY_SEPARATOR.'items'.DIRECTORY_SEPARATOR.$values['img_dir']);
 			}
 
 			$data = array(
@@ -120,7 +120,8 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 				)
 			);
 			$this->response->body(json_encode($data));
-		} catch (ORM_Validation_Exception $e)
+		}
+		catch (ORM_Validation_Exception $e)
 		{
 			$errors = array();
 
@@ -128,7 +129,7 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 
 			foreach ($list as $field => $er)
 			{
-				if (!is_array($er))
+				if ( ! is_array($er))
 				{
 					$er = array($er);
 				}
@@ -142,7 +143,7 @@ class MG_Controller_Admin_Item_Types extends Abstract_Controller_Admin {
 
 	public function action_delete()
 	{
-		if (!$this->user->can('Admin_Item_Types_Delete'))
+		if ( ! $this->user->can('Admin_Item_Types_Delete'))
 		{
 			throw HTTP_Exception::factory('403', 'Permission denied to view admin item types delete');
 		}

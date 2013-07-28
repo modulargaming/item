@@ -36,7 +36,7 @@ class MG_Item_Command_User_Item extends Item_Command {
 		return $item->loaded();
 	}
 
-	public function perform($item, $param, $data=null)
+	public function perform($item, $param, $data = NULL)
 	{
 		$item = ORM::factory('Item')
 			->where('item.name', '=', $param)
@@ -44,6 +44,6 @@ class MG_Item_Command_User_Item extends Item_Command {
 
 		Item::factory($item)->to_user(Auth::instance()->get_user()->id);
 
-		return 'You\'ve recieved a' . $item->name;
+		return 'You\'ve recieved a'.$item->name;
 	}
 }
