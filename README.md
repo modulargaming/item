@@ -8,3 +8,8 @@ Safe
 Shops with Restocking
 User Shops
 Trade
+
+Create/edit/delete items
+Create/edit/delete item types
+Create edit/delete recipes
+Create/edit/delete shops
