@@ -360,7 +360,8 @@ class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 						}
 						break;
 					default :
-						if (substr($action, 0, 5) == 'move_') // Moving items can take an amount
+						// Moving items can take an amount
+						if (substr($action, 0, 5) == 'move_')
 						{
 							$location = substr($action, 5);
 							$cmd = Item_Command::factory('Move_'.ucfirst($location));
