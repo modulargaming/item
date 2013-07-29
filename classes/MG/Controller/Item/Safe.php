@@ -7,8 +7,8 @@
  * @package    MG/Item
  * @category   Controller
  * @author     Maxim Kerstens
- * @copyright  (c) 2013 Modular Gaming Team
- * @license    BSD http://modulargaming.com/license
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 
 class MG_Controller_Item_Safe extends Abstract_Controller_Frontend {

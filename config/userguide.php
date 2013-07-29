@@ -6,7 +6,7 @@ return array (
 			'enabled' => TRUE,
 			'name' => 'Item',
 			'description' => 'Documentation for the official Modular Gaming, gaming item module.',
-			'copyright' => '&copy; 2012–2013 Modular Gaming Team',
+			'copyright' => '&copy; 2012–2013 Modular Gaming',
 		)
 	)
 );

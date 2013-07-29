@@ -5,8 +5,8 @@
  * @package    MG/Item
  * @category   View
  * @author     Maxim Kerstens
- * @copyright  (c) 2013 Modular Gaming Team
- * @license    BSD http://modulargaming.com/license
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_View_Item_Shop_Create extends Abstract_View_Inventory {
 

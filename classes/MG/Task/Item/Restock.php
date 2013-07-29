@@ -5,8 +5,8 @@
  * @package    MG/Item
  * @category   Task
  * @author     Maxim Kerstens
- * @copyright  (c) 2013 Modular Gaming Team
- * @license    BSD http://modulargaming.com/license
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Task_Item_Restock extends Minion_Task {
 
