@@ -56,7 +56,7 @@ $(document).ready(function () {
                 if (data.item == 0) {
                     var a = $('a[data-recipe-id="' + id + '"]');
                     a.parent('li').css('background-color', '#fcf8e3');
-                    a.attr('href', '').addClass('disabled'),
+                    a.attr('href', '').addClass('disabled');
                 }
 
                 $.each(data.result, function (k, v) {

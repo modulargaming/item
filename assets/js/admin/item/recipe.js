@@ -13,7 +13,7 @@ $(document).ready(function () {
             return $.get('./search/', { type:'item', item:query }, function (data) {
                 return process(data);
             });
-        },
+        }
     });
 
     var ingrEl = 0;
@@ -49,7 +49,7 @@ $(document).ready(function () {
                 return $.get('./search/', { type:'item', item:query }, function (data) {
                     return process(data);
                 });
-            },
+            }
         });
         ingrCount++;
         ingrEl++;
