@@ -2,12 +2,13 @@
 /**
  * Item command class
  *
- * Send the item to another user.
+ * Send the item to another user
  *
- * @package    MG/Items
+ * @package    MG/Item
  * @category   Commands
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Item_Command_General_Gift extends Item_Command {
 

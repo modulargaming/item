@@ -2,12 +2,13 @@
 /**
  * Item command class
  *
- * Change a pet's colour (if possible)
+ * Change a pet colour if possible
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Item_Command_Pet_Paint extends Item_Command_Pet {
 

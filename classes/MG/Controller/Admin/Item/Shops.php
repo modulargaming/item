@@ -1,13 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 /**
- * Item type admin controller
+ * Item Shops admin controller
  *
- * Manage site item types
+ * Manage site shops
  *
- * @package    MG/Items
- * @category   Admin
+ * @package    MG/Item
+ * @category   Controller
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Controller_Admin_Item_Shops extends Abstract_Controller_Admin {
 

@@ -2,12 +2,16 @@
 /**
  * Item helper
  *
- * A collection of usefull functions that relate to items.
+ * A collection of useful functions for items.
  *
- * @package    MG/Items
+ * @package    MG/Item
+ * @category   Helpers
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
+
+
 class MG_Item {
 
 	/**

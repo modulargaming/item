@@ -4,10 +4,11 @@
  *
  * Give the player an avatar
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Item_Command_User_Avatar extends Item_Command {
 

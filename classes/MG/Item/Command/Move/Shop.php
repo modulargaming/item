@@ -2,12 +2,13 @@
 /**
  * Item command class
  *
- * Move an item to the player's shop
+ * Move an item to their shop
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming
+ * @license    BSD http://www.modulargaming.com/license
  */
 class MG_Item_Command_Move_Shop extends Item_Command_Move {
 
