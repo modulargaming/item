@@ -4,11 +4,14 @@
  *
  * List and consume items
  *
- * @package    MG/Items
+ * @package    MG/Item
  * @category   Controller
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
+
+
 class MG_Controller_Item_Inventory extends Abstract_Controller_Frontend {
 
 	protected $protected = TRUE;

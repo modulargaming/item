@@ -2,7 +2,7 @@
 /**
  * Abstract base view for Inventory.
  *
- * @package    MG Item
+ * @package    MG/Item
  * @category   View
  * @author     Modular Gaming Team
  * @copyright  (c) 2013 Modular Gaming Team

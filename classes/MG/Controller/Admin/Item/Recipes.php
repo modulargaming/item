@@ -1,13 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 /**
- * Item recipes admin controller
+ * Item Recipe admin controller
  *
- * Manage item recipes
+ * Manage site recipes
  *
- * @package    MG/Items
- * @category   Admin
+ * @package    MG/Item
+ * @category   Controller
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 class MG_Controller_Admin_Item_Recipes extends Abstract_Controller_Admin {
 

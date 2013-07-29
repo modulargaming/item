@@ -2,12 +2,13 @@
 /**
  * Item command class
  *
- * Increase a pet's happiness level
+ * Increase a pet happiness level
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 class MG_Item_Command_Pet_Play extends Item_Command_Pet {
 

@@ -4,10 +4,11 @@
  *
  * Give the user an item
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 class MG_Item_Command_User_Item extends Item_Command {
 

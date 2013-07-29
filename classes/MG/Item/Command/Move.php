@@ -1,4 +1,15 @@
 <?php
+/**
+ * Item command class
+ *
+ * Abstract Move
+ *
+ * @package    MG/Item
+ * @category   Commands  
+ * @author     Maxim Kerstens
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
+ */
 
 class MG_Item_Command_Move extends Item_Command {
 

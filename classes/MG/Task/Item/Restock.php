@@ -1,5 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
-
+/**
+ * Item Restock Task
+ *
+ * @package    MG/Item
+ * @category   Task
+ * @author     Maxim Kerstens
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
+ */
 class MG_Task_Item_Restock extends Minion_Task {
 
 	protected $_options = array();

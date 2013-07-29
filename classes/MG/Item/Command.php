@@ -1,13 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 /**
- * Item command base class
+ * Item abstract command class
  *
- * Define commands that items perform when they're consumed
+ * Define the command that items perform when they are consumed.
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 abstract class MG_Item_Command {
 

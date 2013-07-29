@@ -1,6 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-
-	class MG_Model_Shop_Inventory extends ORM {
+/**
+ * Item Model Shop Inventory
+ *
+ * @package    MG/Item
+ * @category   Model
+ * @author     Maxim Kerstens
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
+ */
+class MG_Model_Shop_Inventory extends ORM {
 
 
 		protected $_table_columns = array(

@@ -1,5 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
-
+/**
+ * View for Item Shops Index
+ *
+ * @package    MG/Item
+ * @category   View
+ * @author     Maxim Kerstens
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
+ */
 class MG_View_Item_Shops_Index extends Abstract_View {
 
 	public $title = 'Shops';

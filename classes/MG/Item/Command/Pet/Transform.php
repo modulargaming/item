@@ -2,12 +2,13 @@
 /**
  * Item command class
  *
- * Change a pet's specie
+ * Change a pet specie
  *
- * @package    MG/Items
- * @category   Commands
+ * @package    MG/Item
+ * @category   Commands  
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 class MG_Item_Command_Pet_Transform extends Item_Command_Pet {
 

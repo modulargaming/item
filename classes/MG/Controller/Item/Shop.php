@@ -1,14 +1,14 @@
 <?php defined('SYSPATH') OR die('No direct script access.');
 /**
- * User shop controller
+ * Item user shop controller
  *
- * Let the user manage his/her shop,
- * buy items
+ * Let the user manage their shop
  *
- * @package    MG/Items
+ * @package    MG/Item
  * @category   Controller
  * @author     Maxim Kerstens
- * @copyright  (c) Modular gaming
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
  */
 class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 	protected $protected = TRUE;

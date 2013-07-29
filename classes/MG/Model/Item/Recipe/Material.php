@@ -1,5 +1,13 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
-
+/**
+ * Item Model Recipe Material
+ *
+ * @package    MG/Item
+ * @category   Model
+ * @author     Maxim Kerstens
+ * @copyright  (c) 2013 Modular Gaming Team
+ * @license    BSD http://modulargaming.com/license
+ */
 class MG_Model_Item_Recipe_Material extends ORM {
 		
 
