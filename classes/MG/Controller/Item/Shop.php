@@ -34,8 +34,6 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 	public function action_upgrade()
 	{
-		$points = Kohana::$config->load('items.points');
-		$initial_points = $points['initial'];
 		$shop = $this->_check_shop();
 
 		$config = Kohana::$config->load('items.user_shop.size');
@@ -43,9 +41,9 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		// if the shops are upgradeable
 		if ($config['active'] == TRUE)
 		{
-			if ($this->user->get_property('points', $initial_points) >= $config['unit_cost'])
+			if ($this->user->get_property('points') >= $config['unit_cost'])
 			{
-				$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $config['unit_cost']);
+				$this->user->set_property('points', $this->user->get_property('points') - $config['unit_cost']);
 				$this->user->save();
 
 				$this->_shop->size = $this->_shop->size + 1;
@@ -89,10 +87,6 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 	public function action_create()
 	{
-
-		$points = Kohana::$config->load('items.points');
-		$initial_points = $points['initial'];
-
 		$shop = $this->_check_shop();
 
 		// if the user already has a shop redirect to index
@@ -117,14 +111,14 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 				if ($config['creation_cost'] != FALSE OR $config['creation_cost'] > 0)
 				{
-					if ($this->user->get_property('points', $initial_points) < $config['creation_cost'])
+					if ($this->user->get_property('points') < $config['creation_cost'])
 					{
 						Hint::error('You can\'t afford to open a shop!');
 
 						return $this->redirect(Route::get('item.user_shop.create')->uri());
 					}
 
-					$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $config['creation_cost']);
+					$this->user->set_property('points', $this->user->get_property('points') - $config['creation_cost']);
 					$this->user->save();
 				}
 
@@ -151,7 +145,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 		if ($config['creation_cost'] != FALSE OR $config['creation_cost'] > 0)
 		{
-			$this->view->creation = array('cost' => $config['creation_cost'], 'affordable' => ($this->user->get_property('points', $initial_points) < $config['creation_cost']));
+			$this->view->creation = array('cost' => $config['creation_cost'], 'affordable' => ($this->user->get_property('points') < $config['creation_cost']));
 		}
 	}
 
@@ -268,7 +262,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 		$points = Kohana::$config->load('items.points');
 		$initial_points = $points['initial'];
-		$this->user->set_property('points', $this->user->get_property('points', $initial_points) + $this->_shop->till);
+		$this->user->set_property('points', $this->user->get_property('points') + $this->_shop->till);
 		$this->user->save();
 
 		Hint::success(__('You\'ve successfully withdrawn :amount from your shop till.', array(':amount' => $this->_shop->till)));
@@ -315,9 +309,6 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 			$item = ORM::factory('User_item', $item_id);
 
-			$points = Kohana::$config->load('items.points');
-			$initial_points = $points['initial'];
-
 			if ( ! $item->loaded() OR $item->location != 'shop')
 			{
 				Hint::error('This item is not in stock');
@@ -326,13 +317,13 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 			{
 				Hint::error('You cannot buy items from your own shop.');
 			}
-			elseif ($this->user->get_property('points', $initial_points) < $item->parameter)
+			elseif ($this->user->get_property('points') < $item->parameter)
 			{
 				Hint::error(__('You don\'t have enough :currency to buy a ":item_name"', array(':item_name' => $item->item->name)));
 			}
 			else
 			{
-				$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $item->parameter);
+				$this->user->set_property('points', $this->user->get_property('points') - $item->parameter);
 				$this->user->save();
 
 				// log this action
