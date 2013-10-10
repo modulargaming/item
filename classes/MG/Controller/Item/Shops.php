@@ -58,9 +58,6 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 	public function action_buy()
 	{
 
-		$points = Kohana::$config->load('items.points');
-		$initial_points = $points['initial'];
-
 		$shop_id = $this->request->param('id');
 		$shop = ORM::factory('Shop', $shop_id);
 
@@ -85,7 +82,7 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 			{
 				Hint::error('The item you tried to buy has already been sold.');
 			}
-			elseif ($item->price > $this->user->get_property('points', $initial_points))
+			elseif ($item->price > $this->user->get_property('points'))
 			{
 				Hint::error('You don\'t have enough points to buy '.$item->item->name);
 			}
@@ -93,7 +90,7 @@ class MG_Controller_Item_Shops extends Abstract_Controller_Frontend {
 			{
 				// retract the points
 
-				$this->user->set_property('points', $this->user->get_property('points', $initial_points) - $item->price);
+				$this->user->set_property('points', $this->user->get_property('points') - $item->price);
 				$this->user->save();
 
 				// send over the item
