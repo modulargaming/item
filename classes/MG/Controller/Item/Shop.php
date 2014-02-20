@@ -307,7 +307,7 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 		{
 			$item_id = $this->request->post('item_id');
 
-			$item = ORM::factory('User_item', $item_id);
+			$item = ORM::factory('User_Item', $item_id);
 
 			if ( ! $item->loaded() OR $item->location != 'shop')
 			{
