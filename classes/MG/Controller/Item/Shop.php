@@ -279,18 +279,19 @@ class MG_Controller_Item_Shop extends Abstract_Controller_Frontend {
 
 		$shop = ORM::factory('User_Shop', $id);
 
+		if ( ! $shop->loaded()) {
+			throw HTTP_Exception::Factory('404', 'No such user shop.');
+		}
+
 		$this->view = new View_Item_Shop_View;
 		$this->view->shop = $shop->as_array();
 		$this->view->owner = $shop->user->as_array();
 
-		if ($shop->loaded())
-		{
-			$inventory = Item::location('shop', FALSE, NULL, $shop->user)
-				->where('parameter', '>', '0')
-				->find_all();
+		$inventory = Item::location('shop', FALSE, NULL, $shop->user)
+			->where('parameter', '>', '0')
+			->find_all();
 
-			$this->view->items = $inventory;
-		}
+		$this->view->items = $inventory;
 	}
 
 	public function action_buy()
