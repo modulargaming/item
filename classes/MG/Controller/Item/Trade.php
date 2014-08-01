@@ -212,7 +212,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 				if ($bid->points > 0)
 				{
-					$bid->user->points += $bid->points;
+					$this->user->set_property('points', $this->user->get_property('points') += $bid->points;
 					$bid->user->save();
 				}
 
@@ -411,7 +411,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 					// deduct points if specified
 					if (Valid::digit($points))
 					{
-						$this->user->points -= $points;
+						$this->user->set_property('points', $this->user->get_property('points') -= $points;
 						$this->user->save();
 						$bid->points = $points;
 					}
@@ -503,7 +503,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 			if ($bid->points > 0)
 			{
 				$user = $lot->user;
-				$user->points += $bid->points;
+				$this->user->set_property('points', $this->user->get_property('points') += $bid->points);
 				$user->save();
 			}
 
@@ -558,7 +558,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 			if ($bid->points > 0)
 			{
 				$user = $bid->user;
-				$user->points += $bid->points;
+				$this->user->set_property('points', $this->user->get_property('points') += $bid->points;
 				$user->save();
 			}
 
@@ -604,7 +604,7 @@ class MG_Controller_Item_Trade extends Abstract_Controller_Frontend {
 
 			if ($bid->points > 0)
 			{
-				$this->user->points += $bid->points;
+				$this->user->set_property('points', $this->user->get_property('points') += $bid->points;
 				$this->user->save();
 			}
 

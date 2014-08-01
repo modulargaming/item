@@ -86,14 +86,7 @@ class MG_Model_Item extends ORM {
 	 */
 	public function name($amount)
 	{
-		if ($amount > 1)
-		{
-			return $amount.' '.Inflector::plural($this->name, $amount);
-		}
-		else
-		{
-			return $amount.' '.$this->name;
-		}
+		return $amount.' '.Inflector::plural($this->name, $amount);
 	}
 
 } // End Item Model

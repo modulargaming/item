@@ -44,7 +44,7 @@ class MG_View_Item_Shops_View extends Abstract_View {
 
 	/**
 	 * Contains the shop's inventory
-	 * @var Model_Shop_Inventory
+	 * @var Model_Shop_Inventory[]
 	 */
 	public $items = FALSE;
 
